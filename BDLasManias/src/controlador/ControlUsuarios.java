@@ -38,6 +38,9 @@ public class ControlUsuarios {
     
     public Set<Usuario> listaAmigos(String nombreUsuario) {
         return gbd.getListaAmigos(nombreUsuario);
-
+    }
+    
+    public boolean eliminarAmigo(String nombreUsuario, String nombreAmigo){
+        return gbd.eliminarAmigo(nombreUsuario, nombreAmigo);
     }
 }

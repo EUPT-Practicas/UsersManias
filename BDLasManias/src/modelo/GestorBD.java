@@ -304,7 +304,45 @@ public class GestorBD {
       return false;
     }
   }
-    
+  
+  public boolean agregarAmigo(String nombreUsuario, String nombreAmigo){
+      try{
+          PreparedStatement sqlagregaAmigo = conexion.prepareStatement(
+          "");
+          return true;
+      }catch(SQLException ex){
+          System.out.println(ex.toString());
+          return false;
+      }  
+  }
+  
+    public boolean eliminarAmigo(String nombreUsuario, String nombreAmigo){
+      try{
+          PreparedStatement sqlEliminaAmigo1 = conexion.prepareStatement(
+          "DELETE FROM Amigos WHERE idAmigos IN (SELECT idAmigos FROM "
+                  + "Amigos WHERE codUsuario IN (SELECT idUsuario FROM "
+                  + "Usuario WHERE nombreUsuario = ?) AND codAmigo "
+                  + "IN (SELECT idUsuario FROM Usuario "
+                  + "WHERE nombreUsuario = ?))");
+          sqlEliminaAmigo1.setString(1, nombreUsuario);
+          sqlEliminaAmigo1.setString(2, nombreAmigo);
+          PreparedStatement sqlEliminaAmigo2 = conexion.prepareStatement(
+          "DELETE FROM Amigos WHERE idAmigos IN (SELECT idAmigos FROM "
+                  + "Amigos WHERE codUsuario IN (SELECT idUsuario FROM "
+                  + "Usuario WHERE nombreUsuario = ?) AND codAmigo "
+                  + "IN (SELECT idUsuario FROM Usuario "
+                  + "WHERE nombreUsuario = ?))");
+          sqlEliminaAmigo2.setString(1, nombreAmigo);
+          sqlEliminaAmigo2.setString(2, nombreUsuario);
+          
+          sqlEliminaAmigo1.executeUpdate();
+          sqlEliminaAmigo2.executeUpdate();
+          return true;
+      }catch(SQLException ex){
+          System.out.println(ex.toString());
+          return false;
+      }  
+  }
   public boolean cambiarEstadoUsuario(String nombreUsuario, int estado){
       try{
       PreparedStatement consultaCambioTipo = conexion.prepareStatement("UPDATE "
