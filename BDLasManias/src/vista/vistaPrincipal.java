@@ -18,7 +18,7 @@ import modelo.Usuario;
  *
  * @author Javi
  */
-public class vistaPrincipal extends JFrame implements Observer {
+public class VistaPrincipal extends JFrame implements Observer {
     private final int EN_JUEGO = 0;
     private final int CONECTADO = 2;
     private final int NO_CONECTADO = 1;
@@ -31,7 +31,7 @@ public class vistaPrincipal extends JFrame implements Observer {
     /**
      * Creates new form vistaPrincipal
      */
-    public vistaPrincipal(ControlUsuarios _controlador, String _nombreUsuario) {
+    public VistaPrincipal(ControlUsuarios _controlador, String _nombreUsuario) {
         initComponents();
         this.nombreUsuario = _nombreUsuario;
         this.controlador = _controlador;
@@ -170,10 +170,8 @@ public class vistaPrincipal extends JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonAgregarAmigo))
+                        .addGap(0, 195, Short.MAX_VALUE)
+                        .addComponent(botonAgregarAmigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonNotificaciones)))
                 .addContainerGap())
@@ -181,13 +179,17 @@ public class vistaPrincipal extends JFrame implements Observer {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAgregarAmigo)
                     .addComponent(botonNotificaciones))
@@ -212,7 +214,7 @@ public class vistaPrincipal extends JFrame implements Observer {
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
 
         if(controlador.eliminarAmigo(nombreUsuario, listaAmigos.getSelectedValue().toString())){
-            
+            controlador.eliminarAmigo(listaAmigos.getSelectedValue().toString(), nombreUsuario);
         }else{
             JOptionPane.showMessageDialog(this, "El amigo no se ha eliminado correctamente.");
         }

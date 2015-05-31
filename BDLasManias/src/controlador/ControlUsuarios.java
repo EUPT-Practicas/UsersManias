@@ -19,15 +19,6 @@ public class ControlUsuarios {
     public ControlUsuarios(Login v) {
         
         this.vistaLogin  = v;
-        //Usuario u2 = new Usuario("Luis", "luis", 0, "luis@lasmanias.es");
-        //gbd.crearUsuario(u2);
-         //System.out.println(gbd.getListaUsuarios());
-         //amigos = gbd.getListaAmigos("Alvaro");
-         
-         //System.out.println(amigos.toString());
-          //notificaciones = gbd.getNotificaciones("javi");
-          //System.out.println(notificaciones.toString());
-        //gbd.cambiarEstadoUsuario("Javi", 1);
          
           vistaLogin.setVisible(true);
     }

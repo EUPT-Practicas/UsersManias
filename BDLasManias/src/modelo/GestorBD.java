@@ -16,7 +16,7 @@ public class GestorBD {
 
   private static final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
   
-  
+  private final int ERROR = -1;
   private static GestorBD instancia = null;
   private ParametrosConexion parametrosConexion;
   private Connection conexion;
@@ -315,28 +315,36 @@ public class GestorBD {
           return false;
       }  
   }
-  
+    
+    public int obtenerCodAmigos(String nombreUsuario, String nombreAmigo){
+                 try{
+          PreparedStatement sqlObtenCodigo = conexion.prepareStatement("SELECT idAmigos FROM Amigos WHERE codUsuario IN (SELECT idUsuario FROM Usuario WHERE nombreUsuario = ?) AND codAmigo IN (SELECT idUsuario FROM Usuario WHERE nombreUsuario = ?)");
+          sqlObtenCodigo.setString(1, nombreUsuario);
+          sqlObtenCodigo.setString(2, nombreAmigo);
+          
+          ResultSet rs = sqlObtenCodigo.executeQuery();
+          int codAmigos;
+          if (!rs.next()) {
+        
+            codAmigos = -1;
+          } else {
+            codAmigos = rs.getInt("idAmigos");
+      }
+          return codAmigos;
+      }catch(SQLException ex){
+          System.out.println(ex.toString());
+          return ERROR;
+      }  
+    }
     public boolean eliminarAmigo(String nombreUsuario, String nombreAmigo){
       try{
+          String codAmigos = String.valueOf(obtenerCodAmigos(
+                  nombreUsuario, nombreAmigo));
           PreparedStatement sqlEliminaAmigo1 = conexion.prepareStatement(
-          "DELETE FROM Amigos WHERE idAmigos IN (SELECT idAmigos FROM "
-                  + "Amigos WHERE codUsuario IN (SELECT idUsuario FROM "
-                  + "Usuario WHERE nombreUsuario = ?) AND codAmigo "
-                  + "IN (SELECT idUsuario FROM Usuario "
-                  + "WHERE nombreUsuario = ?))");
-          sqlEliminaAmigo1.setString(1, nombreUsuario);
-          sqlEliminaAmigo1.setString(2, nombreAmigo);
-          PreparedStatement sqlEliminaAmigo2 = conexion.prepareStatement(
-          "DELETE FROM Amigos WHERE idAmigos IN (SELECT idAmigos FROM "
-                  + "Amigos WHERE codUsuario IN (SELECT idUsuario FROM "
-                  + "Usuario WHERE nombreUsuario = ?) AND codAmigo "
-                  + "IN (SELECT idUsuario FROM Usuario "
-                  + "WHERE nombreUsuario = ?))");
-          sqlEliminaAmigo2.setString(1, nombreAmigo);
-          sqlEliminaAmigo2.setString(2, nombreUsuario);
+          "DELETE FROM Amigos WHERE idAmigos = ?");
+          sqlEliminaAmigo1.setString(1, codAmigos);
           
           sqlEliminaAmigo1.executeUpdate();
-          sqlEliminaAmigo2.executeUpdate();
           return true;
       }catch(SQLException ex){
           System.out.println(ex.toString());
